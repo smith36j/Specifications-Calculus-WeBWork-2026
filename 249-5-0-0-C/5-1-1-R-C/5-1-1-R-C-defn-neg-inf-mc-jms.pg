@@ -1,0 +1,40 @@
+## DESCRIPTION
+##
+## ENDDESCRIPTION
+
+## KEYWORDS()
+
+## DBsubject('')
+## DBchapter('')
+## DBsection('')
+## Date('3 March 2025')
+## Author('Jerrod Smith')
+## Institution('University of Calgary')
+
+DOCUMENT();
+
+loadMacros("PGstandard.pl", "PGML.pl", "parserRadioButtons.pl", "PGcourse.pl",);
+
+# Uncomment the following if you don't want to show which
+# answers are correct and which are incorrect
+#$showPartialCorrectAnswers = 0;
+
+$b   = random(5,25,1);
+
+$radio1 = RadioButtons(
+    [ [ "if the values of \(f(x)\) approach \($b\) as \(x\) is made arbitrarily large and negative.", "if the values of \(f(x)\) are arbitrarily large and negative as \(x\) gets close to \($b\) from the left.", "if \(f(-\infty) = $b\).", "if \(y=f(x)\) has a horizontal asymptote at \(x=$b\)."], 'None of the above.' ],
+    "if the values of \(f(x)\) approach \($b\) as \(x\) is made arbitrarily large and negative." # correct answer
+);
+
+BEGIN_PGML
+Let [`f`] be a function of one real variable [`x`].
+
+Which of the following statements correctly completes the definition of what it means for [``\lim_{x \to -\infty}f(x)``] to exist and equal [`[$b]`]?
+
+"We say that [`` \lim_{x \to -\infty}f(x)``] exists and is equal to [`[$b]`] ...
+
+[_]{$radio1}
+END_PGML
+
+
+ENDDOCUMENT();

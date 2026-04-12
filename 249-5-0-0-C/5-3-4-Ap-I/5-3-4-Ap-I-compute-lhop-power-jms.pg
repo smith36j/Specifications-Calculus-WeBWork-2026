@@ -1,0 +1,91 @@
+## DESCRIPTION
+##
+## ENDDESCRIPTION
+
+## KEYWORDS()
+
+## DBsubject('')
+## DBchapter('')
+## DBsection('')
+## Date('5 March 2025')
+## Author('Jerrod Smith')
+## Institution('University of Calgary')
+
+DOCUMENT();
+
+loadMacros(
+    "PGstandard.pl",    # Standard macros for PG language
+    "PGML.pl",          # PGML markup and Math Objects
+    "PGcourse.pl",      # Customization file for the course
+);
+
+# Uncomment the following if you don't want to show which
+# answers are correct and which are incorrect
+#$showPartialCorrectAnswers = 0;
+
+# Uncomment the following to override the default numerical
+# tolerances
+# Context()->->flags->set(tolerance => 0.0001, tolType => 'absolute');
+
+# first limit
+$a = non_zero_random(2,7,1)*random(-1,1,2);
+$f = Formula("(1+$a/x)^x")->reduce();
+$ans1 = Compute("e**($a)");
+
+#second limit
+$b = random(3,5,2);
+$bsq = $b**2;
+$g = Formula("(cos($b*x))^(1/x^2)")->reduce();
+$ans2 = Compute("e**(-$bsq/2)");
+
+$ver = random(0,1,1);
+if($ver == 0)
+{
+BEGIN_PGML
+Evaluate the following limit.
+
+[``\lim_{x\to \infty}[$f]=\,``][_]{$ans1}{5}
+
+If the limit does not exist and does not equal [`\pm\infty`], then enter [|DNE|]*. 
+
+**Remark:** Note that saying that a limit is "equal to" [|Does not exist|]* or [|DNE|]* does not make sense and we would not normally do this when communicating mathematics; however, this is more convenient in WeBWork.
+END_PGML
+
+BEGIN_PGML_SOLUTION
+The limit  [``L=\lim_{x\to \infty}[$f]``] is an indeterminate form of Type [`1^\infty`].
+We will apply the naturual logarithm, which is a continuous function, to first manipulate the limit before applying L'Hôpital's Rule.
+[```\ln(L) = \ln\left(\lim_{x\to \infty}[$f]\right) = \lim_{x\to \infty} \ln\left([$f]\right) ```]
+Using properties of logarithms, this becomes
+[``` \ln(L) =  \lim_{x\to \infty} x \ln\left(1+\dfrac{[$a]}{x}\right) = \lim_{x\to \infty} \frac{\ln\left(1+\dfrac{[$a]}{x}\right)}{\dfrac{1}{x}}```]
+which is a Type [``\frac{0}{0}``] limit so we can apply L'Hôpital's Rule
+[```\ln(L) = \lim_{x\to \infty} \frac{\dfrac{1}{1+\dfrac{[$a]}{x}}\left(\dfrac{-[$a]}{x^2}\right)}{\dfrac{-1}{x^2}} = \lim_{x\to \infty} {\dfrac{1}{1+\dfrac{[$a]}{x}}\left(\dfrac{-[$a]}{x^2}\right)}\left({\dfrac{x^2}{-1}}\right)  = \lim_{x\to \infty} \frac{[$a]}{1+\dfrac{[$a]}{x}} = \frac{[$a]}{1+0}=[$a]```]
+therefore, [``L = e^{[$a]}``].
+END_PGML_SOLUTION
+}
+else
+{
+BEGIN_PGML
+Evaluate the following limit.
+
+[``\lim_{x\to 0^+}[$g]=\,``][_]{$ans2}{5}
+
+If the limit does not exist and does not equal [`\pm\infty`], then enter [|DNE|]*. 
+
+**Remark:** Note that saying that a limit is "equal to" [|Does not exist|]* or [|DNE|]* does not make sense and we would not normally do this when communicating mathematics; however, this is more convenient in WeBWork.
+END_PGML
+
+BEGIN_PGML_SOLUTION
+The limit  [``L = \lim_{x\to 0^+}[$g]``] is an indeterminate form of Type [`1^\infty`]. 
+
+We will apply the naturual logarithm, which is a continuous function, to first manipulate the limit before applying L'Hôpital's Rule.
+[``` \ln(L) = \ln\left(\lim_{x\to 0^+}[$g]\right) = \lim_{x\to 0^+}\ln\left([$g]\right) ```]
+Using properties of logarithms, this becomes
+[``` \ln(L) = \lim_{x\to 0^+} \frac{1}{x^2} \ln(\cos([$b]x)) = \lim_{x\to 0^+} \frac{\ln(\cos([$b]x))}{x^2} ```]
+which is a Type [``\frac{0}{0}``] limit so we can apply L'Hôpital's Rule
+[``` \ln(L) = \lim_{x\to 0^+} \frac{\dfrac{-[$b]\sin([$b]x)}{\cos([$b]x)}}{2x} = \lim_{x\to 0^+} \frac{-[$b]\tan([$b]x)}{2x}. ```]
+This is another Type [``\frac{0}{0}``] limit so we can apply L'Hôpital's Rule again,
+[``` \ln(L) = \lim_{x\to 0^+} \frac{-[$bsq]\sec^2([$b]x)}{2} = \frac{-[$bsq]\sec^2(0)}{2} = \frac{-[$bsq]}{2} ```]
+Therefore, [``L = e^{-[$bsq]/2}``].
+END_PGML_SOLUTION
+}
+ENDDOCUMENT();

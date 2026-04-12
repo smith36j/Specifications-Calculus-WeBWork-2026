@@ -1,0 +1,89 @@
+## DESCRIPTION
+##
+## ENDDESCRIPTION
+
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Limits and continuity)
+## DBsection(One-sided limits - concept of)
+## Date(3 March 2025)
+## Institution(Univeristy of Calgary)
+## Author(Jerrod Smith)
+## Level(4)
+
+DOCUMENT();
+
+loadMacros("PGstandard.pl", "PGML.pl", "PGtikz.pl", "PGcourse.pl",);
+$fm4 = non_zero_random(1,5,1);
+$fm3l = random(-4,-1,1); #f at -3 from left
+$fm3lnode = $fm3l+1/10;
+$fm3r = $fm3l+random(2,5,1); #f at -3 from right and f(-3)
+$f1l = random(4,1,1); #f at 1 from left 
+$f1r = $f1l - random(2,5,1); #f at 1 from right and f(1)
+$f4 = non_zero_random(-5,2,1);
+#two sided
+$fm3 = 'DNE';
+$f1 = 'DNE';
+$version = random(-1,1,2);
+
+
+$graph_image = createTikZImage();
+$graph_image->tikzLibraries("arrows.meta");
+$graph_image->ext("png");
+
+$graph_image->BEGIN_TIKZ
+\draw[->,thick] (-5,0) -- (5,0) node[above left,outer sep=2pt]{\(x\)};
+\draw[->,thick] (0,-5) -- (0,5) node[below right,outer sep=2pt]{\(y\)};
+\draw[very thin,color=gray] (-5,-5) grid (5,5);
+\foreach \x in {-4,-2,2,4} \draw[thin] (\x,5pt) -- (\x,-5pt) node[below]{\(\x\)};
+\foreach \y in {-4,-2,2,4} \draw[thin] (5pt,\y) -- (-5pt,\y) node[left]{\(\y\)};
+\draw[<-,very thick,rounded corners=8pt, red] (-4.5,$fm4) .. controls (-3.5,1) .. (-3,$fm3lnode);
+\draw[red, very thick]  (-3,$fm3l) circle (2.5pt);
+\filldraw[red, very thick]  (-3,$fm3r) circle (2.5pt);
+\draw[very thick,rounded corners=8pt, red] (-3,$fm3r) .. controls (-1,1) .. (0.9,$f1l);
+\draw[red, very thick]  (1,$f1l) circle (2.5pt);
+\filldraw[red, very thick]  (1,$f1r) circle (2.5pt);
+\draw[->,very thick,rounded corners=8pt, red] (1,$f1r)  .. controls (3,1) .. (4.5,$f4);
+\draw[red] (2,4) node [above right]{\(y=f(x)\)};
+END_TIKZ
+
+if($version > 0) #ask about either -3 or 1
+{
+BEGIN_PGML
+Consider the following graph of the piecewise defined function [`y=g(x)`].
+
+[@ image($graph_image, width => 500, tex_size => 800) @]*
+
+Evaluate the following limits or expressions.
+
+a) [``\lim_{x\to -3^-}g(x) = \, ``] [_]{$fm3l}{2}
+b) [``\lim_{x\to -3^+}g(x) = \, ``] [_]{$fm3r}{2}
+c) [``\lim_{x\to -3}g(x) = \, ``] [_]{$fm3}{2}
+d) [``g(-3) = \, ``] [_]{$fm3r}{2}
+
+If a limit does not exist and does not equal [`\pm\infty`], then enter [|DNE|]*. 
+
+**Remark:** Note that saying that a limit is "equal to" [|Does not exist|]* or [|DNE|]* does not make sense and we would not normally do this when communicating mathematics; however, this is more convenient in WeBWork.
+
+END_PGML
+}
+else
+{
+BEGIN_PGML
+Consider the following graph of the piecewise defined function [`y=f(x)`].
+
+[@ image($graph_image, width => 500, tex_size => 800) @]*
+
+Evaluate the following limits or expressions. 
+
+a) [``\lim_{x\to 1^-}g(x) = \, ``] [_]{$f1l}{2}
+b) [``\lim_{x\to 1^+}g(x) = \, ``] [_]{$f1r}{2}
+c) [``\lim_{x\to 1}g(x) = \, ``] [_]{$f1}{2}
+d) [``g(1) = \, ``] [_]{$f1r}{2}
+
+If a limit does not exist and does not equal [`\pm\infty`], then enter [|DNE|]*. 
+
+**Remark:** Note that saying that a limit is "equal to" [|Does not exist|]* or [|DNE|]* does not make sense and we would not normally do this when communicating mathematics; however, this is more convenient in WeBWork.
+END_PGML
+}
+ENDDOCUMENT();

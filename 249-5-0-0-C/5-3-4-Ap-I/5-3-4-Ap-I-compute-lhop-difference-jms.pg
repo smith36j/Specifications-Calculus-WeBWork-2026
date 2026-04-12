@@ -1,0 +1,55 @@
+## DESCRIPTION
+##
+## ENDDESCRIPTION
+
+## KEYWORDS()
+
+## DBsubject('')
+## DBchapter('')
+## DBsection('')
+## Date('12 March 2025')
+## Author('Jerrod Smith')
+## Institution('University of Calgary')
+
+DOCUMENT();
+
+loadMacros(
+    "PGstandard.pl",    # Standard macros for PG language
+    "PGML.pl",          # PGML markup and Math Objects
+    "PGcourse.pl",      # Customization file for the course
+);
+
+# Uncomment the following if you don't want to show which
+# answers are correct and which are incorrect
+#$showPartialCorrectAnswers = 0;
+
+# Uncomment the following to override the default numerical
+# tolerances
+# Context()->->flags->set(tolerance => 0.0001, tolType => 'absolute');
+
+# first limit
+$a = random(2,5,1)*random(-1,1,2);
+$f = Formula("$a/x - $a/(e^x-1)")->reduce();
+if($a < 0)
+{$sign = '-';}
+else
+{$sign = '+';}
+$ans = Compute("$a/2");
+BEGIN_PGML
+Evaluate the following limit.
+
+[``\lim_{x\to 0^+}[$f]=\,``][_]{$ans}{5}
+
+If the limit does not exist and does not equal [`\pm\infty`], then enter [|DNE|]*. 
+
+**Remark:** Note that saying that a limit is "equal to" [|Does not exist|]* or [|DNE|]* does not make sense and we would not normally do this when communicating mathematics; however, this is more convenient in WeBWork.
+END_PGML
+
+BEGIN_PGML_SOLUTION
+As [`x`] approaches [`0`] from the right, both [`x`] and [`e^x-1`] approach [`0`] from with positive values. So, both [``\frac{[$a]}{x}``] and [``\frac{[$a]}{e^x-1}``] approach [`[$sign]\infty`] and this limit is of type [`\infty-\infty`]. We will convert this to a limit of type [`\frac{0}{0}`] so that we can use L'Hôpital's Rule (twice, indicated by "[`\mathrm{L'H}`]").
+[```\lim_{x\to 0^+}[$f]= \lim_{x\to 0^+} \frac{[$a]e^x - [$a] - [$a]x}{x(e^x-1)} = [$a] \lim_{x\to 0^+}\frac{e^x - 1 - x}{x(e^x-1)} ```]
+[``` \underbrace{=}_{(\mathrm{L'H})} [$a]\lim_{x\to 0^+} \frac{e^x -1}{e^x - 1 + xe^x} \underbrace{=}_{(\mathrm{L'H})} [$a]\lim_{x\to 0^+} \frac{e^x}{e^x + e^x + xe^x}```]
+[``` = [$a] \frac{1}{1+1+0} = \frac{[$a]}{2}.  ```]
+END_PGML_SOLUTION
+
+ENDDOCUMENT();

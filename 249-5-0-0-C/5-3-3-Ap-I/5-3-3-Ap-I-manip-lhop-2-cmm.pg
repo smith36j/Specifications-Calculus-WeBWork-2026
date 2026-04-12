@@ -1,0 +1,84 @@
+## DESCRIPTION
+##
+## ENDDESCRIPTION
+
+## KEYWORDS()
+
+## DBsubject('')
+## DBchapter('')
+## DBsection('')
+## Date('13 March 2025')
+## Author('Claudia Mahler')
+## Institution('University of Calgary')
+
+DOCUMENT();
+
+loadMacros(
+    "PGstandard.pl",    # Standard macros for PG language
+    "PGML.pl",          # PGML markup and Math Objects
+    "PGcourse.pl",      # Customization file for the course
+);
+
+# Uncomment the following if you don't want to show which
+# answers are correct and which are incorrect
+#$showPartialCorrectAnswers = 0;
+
+# Uncomment the following to override the default numerical
+# tolerances
+# Context()->->flags->set(tolerance => 0.0001, tolType => 'absolute');
+
+# first limit
+$a = random(2,10,1);
+$b = non_zero_random(2,4,1);
+
+$f = Formula("(1+($a/x))**{$b*x}")->reduce();
+
+
+$ans1 = Compute("ln(1+($a/x))");
+$ans2 = Compute("1/($b*x)");
+
+
+BEGIN_PGML
+Consider the limit [``\lim_{x\to \infty}[$f]\,``]. Express the function [``[$f]``] in the form
+
+[```\frac{\text{numerator}}{\text{denominator}}```] 
+
+such that the resulting limit 
+
+
+[```\lim_{x\to \infty}\frac{\text{numerator}}{\text{denominator}}\,```]
+
+has the indeterminate form [``\frac{0}{0}``] so that l'Hopital's Rule could be used directly to find the limit.
+
+
+Numerator: [_]{$ans1}{5}
+
+Denominator: [_]{$ans2}{5}
+
+
+
+END_PGML
+
+BEGIN_PGML_SOLUTION
+[``\lim_{x\to \infty}[$f]\,``] is of the indeterminate form [``1^\infty``], as
+
+[``\lim_{x\to \infty} \left( 1+\frac{[$a]}{x} \right) \,=1``] and [``\lim_{x\to \infty}[$b]x\,= \infty``].
+
+We can rewrite this expression as 
+
+[``\lim_{x\to \infty}[$f]=\lim_{x\to \infty} [$b]x \cdot \ln \left[ 1+\frac{[$a]}{x} \right]``]
+
+which is of the indeterminate form [``\infty \cdot 0\,``], as 
+
+[``\lim_{x\to \infty}[$b]x\,= \infty``] and [``\lim_{x\to \infty} \ln \left[ 1+\frac{[$a]}{x} \right] \,=0``]. 
+
+We can again rewrite this expression as 
+
+[``\lim_{x\to \infty} [$b]x \cdot \ln \left[ 1+\frac{[$a]}{x} \right] = \lim_{x\to \infty} \frac{ \ln \left[ 1+\frac{[$a]}{x} \right]}{\frac{1}{[$b]x}}``]
+
+which has the indeterminate form [``\frac{0}{0}``].
+
+
+END_PGML_SOLUTION
+
+ENDDOCUMENT();

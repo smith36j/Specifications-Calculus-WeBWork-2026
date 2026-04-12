@@ -1,0 +1,51 @@
+## DESCRIPTION
+##
+## ENDDESCRIPTION
+
+## KEYWORDS()
+
+## DBsubject('')
+## DBchapter('')
+## DBsection('')
+## Date('12 March 2025')
+## Author('Jerrod Smith')
+## Institution('University of Calgary')
+
+DOCUMENT();
+
+loadMacros(
+    "PGstandard.pl",    # Standard macros for PG language
+    "PGML.pl",          # PGML markup and Math Objects
+    "PGcourse.pl",      # Customization file for the course
+);
+
+# Uncomment the following if you don't want to show which
+# answers are correct and which are incorrect
+#$showPartialCorrectAnswers = 0;
+
+# Uncomment the following to override the default numerical
+# tolerances
+# Context()->->flags->set(tolerance => 0.0001, tolType => 'absolute');
+
+# first limit
+$a = non_zero_random(2,7,1)*random(-1,1,2);
+$f = Formula("x*sin($a/x)")->reduce();
+$ans = Compute("$a");
+
+BEGIN_PGML
+Evaluate the following limit.
+
+[``\lim_{x\to \infty}[$f]=\,``][_]{$ans}{5}
+
+If the limit does not exist and does not equal [`\pm\infty`], then enter [|DNE|]*. 
+
+**Remark:** Note that saying that a limit is "equal to" [|Does not exist|]* or [|DNE|]* does not make sense and we would not normally do this when communicating mathematics; however, this is more convenient in WeBWork.
+END_PGML
+
+BEGIN_PGML_SOLUTION
+As [`x`] approaches infinity, [`\frac{[$a]}{x}`] approaches [`0`] and [`\sin(0) = 0`], so this limit is type "[`\infty\cdot 0`]." We will change it to the form [`\frac{0}{0}`] so we can use L'Hôpital's Rule (indicated by "[`\mathrm{L'H}`]")..
+
+[```\lim_{x\to \infty}[$f]=\lim_{x\to \infty} \frac{\sin(\frac{[$a]}{x})}{\frac{1}{x}} \underbrace{=}_{(\mathrm{L'H})} \frac{\cos(\frac{[$a]}{x})\frac{-[$a]}{x^2}}{\frac{-1}{x^2}} = [$a] \lim_{x\to\infty}\cos\left(\frac{[$a]}{x}\right) = [$a] \cos(0) = [$a]```]
+END_PGML_SOLUTION
+
+ENDDOCUMENT();

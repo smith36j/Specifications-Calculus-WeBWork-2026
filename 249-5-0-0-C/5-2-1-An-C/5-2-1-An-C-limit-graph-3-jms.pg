@@ -1,0 +1,73 @@
+## DESCRIPTION
+##
+## ENDDESCRIPTION
+
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Limits and continuity)
+## DBsection(One-sided limits - concept of)
+## Date(3 March 2025)
+## Institution(Univeristy of Calgary)
+## Author(Jerrod Smith)
+## Level(4)
+
+DOCUMENT();
+
+loadMacros("PGstandard.pl", "PGML.pl", "PGtikz.pl", "PGcourse.pl",);
+$fm4 = non_zero_random(-3,4,1);
+$fm2_val = random(-4,4,1); #f(-2)
+$fm2_hole = non_zero_random(-4,4,1); #f from both sides at -2
+if($fm2_val == $fm2_hole)
+{$fm2_hole = abs($fm2_hole)-1;} #keep a removable discontinuity
+$f1l = random(4,1,1); #f at 1 from left 
+$f1r = $f1l - random(2,5,1); #f at 1 from right and f(1)
+$f4 = non_zero_random(-5,5,1);
+#two sided at 1
+$side = random(-1,1,2);
+if($side == -1)
+{$ans1 = $f1l;}
+else
+{$ans1 = $f1r;}
+if($side == -1)
+{$side_symbol = '-';}
+else
+{$side_symbol = '+';}
+
+
+$graph_image = createTikZImage();
+$graph_image->tikzLibraries("arrows.meta");
+
+$graph_image->BEGIN_TIKZ
+\draw[->,thick] (-5,0) -- (5,0) node[above left,outer sep=2pt]{\(x\)};
+\draw[->,thick] (0,-5) -- (0,5) node[below right,outer sep=2pt]{\(y\)};
+\draw[very thin,color=gray] (-5,-5) grid (5,5);
+\foreach \x in {-4,-2,2,4} \draw[thin] (\x,5pt) -- (\x,-5pt) node[below]{\(\x\)};
+\foreach \y in {-4,-2,2,4} \draw[thin] (5pt,\y) -- (-5pt,\y) node[left]{\(\y\)};
+\draw[<-,very thick,rounded corners=8pt, red] (-4.5,$fm4) .. controls (-3.5,1) .. (-2.1,$fm2_hole);
+\draw[red, very thick]  (-2,$fm2_hole) circle (2.5pt);
+\filldraw[red, very thick]  (-2,$fm2_val) circle (2.5pt);
+\draw[very thick,rounded corners=8pt, red] (-1.9,$fm2_hole) .. controls (-1,1) .. (0.9,$f1l);
+\draw[red, very thick]  (1,$f1l) circle (2.5pt);
+\filldraw[red, very thick]  (1,$f1r) circle (2.5pt);
+\draw[->,very thick,rounded corners=8pt, red] (1,$f1r)  .. controls (3,1) .. (4.5,$f4);
+\draw[red] (2,4) node [above right]{\(y=h(x)\)};
+END_TIKZ
+
+{
+BEGIN_PGML
+Consider the following graph of the piecewise defined function [`y=h(x)`].
+
+[@ image($graph_image, width => 500, tex_size => 800) @]*
+
+Evaluate the following limits or expressions. 
+
+a) [``h(-2) = \, ``] [_]{$fm2_val}{2}
+b) [``\lim_{x\to -2}h(x) = \, ``] [_]{$fm2_hole}{2}
+c) [``\lim_{x\to 1^{[$side_symbol]}}h(x) = \, ``] [_]{$ans1}{2}
+
+If a limit does not exist and does not equal [`\pm\infty`], then enter [|DNE|]*. 
+
+**Remark:** Note that saying that a limit is "equal to" [|Does not exist|]* or [|DNE|]* does not make sense and we would not normally do this when communicating mathematics; however, this is more convenient in WeBWork.
+END_PGML
+}
+ENDDOCUMENT();
