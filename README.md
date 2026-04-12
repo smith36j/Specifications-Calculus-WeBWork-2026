@@ -9,4 +9,4 @@ Contact jerrod.smith@ucalgary.ca.
  
  MATH_249_Revised_Learning_Outcomes_F25.xlsx contains learning outcomes, classification based on Bloom's taxonomy and the WeBWork problem classification scheme. Course learning outcomes (CLOs) are used to organize and name WeBWork problems.
 
- WeBWork Problems are in the archive MATH249-WeBWork-2026.zip; the arcive may need to be uploaded to an instance of WeBWork to be unpacked.
+ WeBWork Problems are in the archive MATH249-WeBWork-2026.zip
