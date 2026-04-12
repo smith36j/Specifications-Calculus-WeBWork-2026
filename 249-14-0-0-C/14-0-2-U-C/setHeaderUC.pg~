@@ -1,0 +1,82 @@
+DOCUMENT();
+
+loadMacros(
+	"PG.pl",
+	"PGbasicmacros.pl",
+	
+);
+
+
+####################################################
+#
+# The item below printed out only when a hardcopy is made.
+#
+####################################################
+
+TEXT($BEGIN_ONE_COLUMN);
+
+TEXT(MODES(TeX =>EV3(<<'END_TEXT'),HTML=>""));
+
+\noindent {\large \bf $studentName}
+\hfill
+\noindent {\large \bf \{protect_underbar($courseName)\}}
+\par
+
+END_TEXT
+
+##########################################################
+# 
+# Items printed both to the screen when a hardcopy is made.
+#
+# You can insert a url pointing to your course's home page 
+# a few lines below.  Remove the comment (#) symbol from the line
+# to make it active.
+#
+##########################################################
+
+BEGIN_TEXT
+
+$BBOLD \{ protect_underbar($setNumber) \}  is due on $DueDateDayOfWeek, $DueDateMonthWord $DueDateDay, $DueDateYear4Digit at $DueDateTime12. $EBOLD
+$PAR
+The number of attempts available for each question is noted
+beside the question.  If you are having trouble figuring out your error, you should consult the textbook,
+or ask a fellow student, one of the TA's or your professor for help.
+$BR
+There are also other resources at your disposal, such as the Mathematics
+Continuous Tutorials.  Don't spend a lot of time guessing -- it's not very efficient or effective.
+$PAR
+Make sure to give lots of significant digits for (floating point) numerical answers.
+For most problems when entering numerical answers, you can if you wish
+enter elementary expressions such as \( 2\wedge3 \) instead of 8, \( \sin(3*\mbox{pi}/2) \)instead
+of -1, \( e\wedge (\ln(2)) \) instead of 2,
+\( (2+\tan(3))*(4-\sin(5))\wedge6-7/8 \) instead of 27620.3413, etc.
+END_TEXT
+
+TEXT(MODES(HTML =>EV3(<<'END_TEXT'),TeX=>""));
+ Here's the 
+\{ htmlLink(qq!http://webwork.maa.org/wiki/Available_Functions!,"list of the functions", q!TARGET = "AvailableFunctions"!) \}
+ which WeBWorK understands.
+$PAR
+END_TEXT
+
+TEXT(MODES(HTML =>EV3(<<'END_TEXT'),TeX=>""));
+If you are having technical problems with webwork, help can be found at
+$BR
+\{ 
+htmlLink(qq!http://www.math.ucalgary.ca/undergraduate/current_students/tools/webwork!,
+"http://www.math.ucalgary.ca/undergraduate/current_students/tools/webwork", q!TARGET = "wwhelp"!) 
+\} 
+$BR
+$BR
+If you wish to contact your professor directly, the Math Department Directory can be found at
+$BR
+\{ 
+htmlLink(qq!http://math.ucalgary.ca/math_unitis/contact-us/directory!,
+"http://math.ucalgary.ca/math_unitis/contact-us/directory", q!TARGET = "mathdirectory"!) 
+\} 
+
+END_TEXT
+
+TEXT($END_ONE_COLUMN);
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
