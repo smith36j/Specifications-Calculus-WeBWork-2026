@@ -12,10 +12,10 @@ WeBWork users may use and copy material in this repository under the following l
 - NonCommercial: Users may not use the material for commercial purposes.
 - ShareAlike: If users remix, transform, or build upon the material, users must only distribute their contributions under the same license as the original.
 
-MATH_249_Revised_Learning_Outcomes_F25.xlsx contains detaile dlearning outcomes, classification based on Bloom's taxonomy and the WeBWork problem classification scheme. Course learning outcomes (CLOs) are used to organize and name WeBWork problems.
+MATH_249_Revised_Learning_Outcomes_F25.xlsx and .csv contains detailed learning outcomes, classification based on Bloom's taxonomy and the WeBWork problem classification scheme. Course learning outcomes (CLOs) are used to organize and name WeBWork problems.
 
- MATH_249_CLO_(High-level).docx contain course learning outcomes (CLOs) used to organize assessments.
+MATH_249_CLO_(High-level).docx and .rtf contain course learning outcomes (CLOs) used to organize assessments.
 
- WeBWork Problems are in the archive MATH249-WeBWork-2026.zip
+WeBWork Problems are in the archive MATH249-WeBWork-2026.zip
 
- Folders 249-N-0-0-C/I contain WeBWork problems. Folder and file names correspond to course learning outcomes. 
+Folders 249-N-0-0-C/I contain WeBWork problems. Folder and file names correspond to course learning outcomes. 
